@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Covert encryption Javascript prototype",
   "main": "index.js",
-  "devDependencies": {},
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +12,8 @@
     "url": "https://github.com/covert-encryption/covert-web"
   },
   "dependencies": {
-    "libsodium-wrappers": "^0.7.9"
+    "libsodium-wrappers": "^0.7.9",
+    "zxcvbn": "^4.4.2"
   },
   "keywords": [
     "security",
