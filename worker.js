@@ -89,3 +89,8 @@ const xor = (a, b) => {
 
 const armor_decode = text => Uint8Array.from(atob(text), c => c.charCodeAt(0))
 const armor_encode = data => btoa(String.fromCharCode.apply(null, data))
+
+// Increment nonce which must be Uint8Array(12)
+const nonce_increment = n => {
+  for (let i = 0; i < 12; ++i) if (++n[i] < 256) break
+}
