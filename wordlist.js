@@ -1024,6 +1024,6 @@ export const words = [
   "zoo",
   "zorro",
   "zulu",
-];
+]
 
-console.assert(words.length === 1024); //Exactly 10 bits of entropy per word
+console.assert(words.length === 1024) //Exactly 10 bits of entropy per word
