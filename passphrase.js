@@ -19,7 +19,6 @@ const pwhints = pwd => {
     sugg = []
   }
 
-  
   let t = .7/100 * guesses
   let pwbytes = encode(pwd)
   let factor = costfactor(pwbytes)
