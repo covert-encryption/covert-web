@@ -86,3 +86,6 @@ const xor = (a, b) => {
   for (let i = 0; i < b32.length; ++i) a32[i] ^= b32[i]
 }
 
+
+const armor_decode = text => Uint8Array.from(atob(text), c => c.charCodeAt(0))
+const armor_encode = data => btoa(String.fromCharCode.apply(null, data))
