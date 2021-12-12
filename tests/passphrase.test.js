@@ -1,13 +1,13 @@
-import { generatePassphrase, pwhints, costfactor, autoComplete } from "../passphrase.js"
+import { generate, pwhints, costfactor, autoComplete } from "../passphrase.js"
 
 const test_generate_passphrase = () => {
-    let pw1 = generatePassphrase()
-    let pw2 = generatePassphrase()
+    let pw1 = generate()
+    let pw2 = generate()
     console.assert(pw1 !== pw2)
-    let pw3 = generatePassphrase(8, "-")
+    let pw3 = generate(8, "-")
     console.assert((pw3.match(/-/g) || []).length === 7)
     for (let i = 0; i<10; i++) {
-        generatePassphrase(8, "_") // logic_left_mercy_yes_check_sugar_radio_place
+        generate(8, "_") // logic_left_mercy_yes_check_sugar_radio_place
     } 
     
 }
