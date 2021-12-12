@@ -15,6 +15,7 @@ const test_autoComplete = () => {
     console.assert(autoComplete("") === "enter a few letters of a word first")
     console.assert(autoComplete("ang").includes("angle"))
     console.assert(autoComplete("an").length === 7)
+    console.assert(autoComplete("a") === "too many matches")
 }
 
 const test_costfactor = () => {
