@@ -1,4 +1,4 @@
-import { generate, pwhints, costfactor } from "../passphrase.js";
+import { generate, pwhints, costfactor, autoComplete } from "../passphrase.js";
 
 const test_generate = () => {
     let pw1 = generate()
@@ -9,7 +9,12 @@ const test_generate = () => {
     for (let i = 0; i<10; i++) {
         generate(8, "_")
     }
+}
 
+const test_autoComplete = () => {
+    console.assert(autoComplete("") === "enter a few letters of a word first")
+    console.assert(autoComplete("ang").includes("angle"))
+    console.assert(autoComplete("an").length === 7)
 }
 
 const test_costfactor = () => {
@@ -46,5 +51,6 @@ const test_pwhints = () => {
 }
 
 test_generate()
+test_autoComplete()
 test_costfactor()
 test_pwhints()
