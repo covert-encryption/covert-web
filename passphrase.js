@@ -9,11 +9,13 @@ const sodium = _sodium
 
 // Generate a password of random words without repeating any word.
 export const generatePassphrase = (n=4, sep="") => {
-  const wl = words
-  if (!Number.isInteger(n) || n<3) n=4 // default 4 words. extra barrier after ui validation
-  const pw = wl.sort(() => sodium.randombytes_random() - sodium.randombytes_random()).slice(0, n).join(sep)
-  while (4 * zxcvbn(pw).guesses > wl.length ** n) {
-    return pw
+  if (!Number.isInteger(n) || n < 1 || n > words.length) throw RangeError("Invalid n")
+  while (true) {
+    const r = new Uint32Array(n)
+    crypto.getRandomValues(r)
+    const wl = [...words]
+    const pw = Array.from(r).map(v => wl.splice(Math.floor(v * 2**-32 * wl.length), 1)[0]).join(sep)
+    if (4 * zxcvbn(pw).guesses > wl.length ** n) return pw
   }
 }
 
