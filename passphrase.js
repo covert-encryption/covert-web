@@ -9,20 +9,11 @@ const sodium = _sodium
 
 // Generate a password of random words without repeating any word.
 export const generatePassphrase = (n=4, sep="") => {
-  let wl = words
-  let pw = wl.sort(() => sodium.randombytes_random() - sodium.randombytes_random()).slice(0, n).join(sep)
+  const wl = words
+  const pw = wl.sort(() => sodium.randombytes_random() - sodium.randombytes_random()).slice(0, n).join(sep)
   if (4 * zxcvbn(pw).guesses > wl.length ** n) {
     return pw
   }
-}
-
-// Generate a password of base64 string from 16 bytes of random buf
-export const generatePassword = (len = 16) => {
-  let pwd = sodium.to_base64(
-    sodium.randombytes_buf(len),
-    sodium.base64_variants.URLSAFE_NO_PADDING
-  )
-  return pwd
 }
 
 
@@ -32,7 +23,7 @@ export const costfactor = pwd => {
 
 
 export const autoComplete = str => {
-  let results = words.filter((word) => word.startsWith(str))
+  const results = words.filter((word) => word.startsWith(str))
   if(!str) return "enter a few letters of a word first"
   if (results.length > 0 && results.length <= 10) {
     return results
@@ -45,10 +36,10 @@ export const autoComplete = str => {
 
 
 export const pwhints = pwd => {
-  let maxLen = 20
-  let z = zxcvbn(pwd)
-  let fb = z.feedback
-  let warn = fb.warning
+  const maxLen = 20
+  const z = zxcvbn(pwd)
+  const fb = z.feedback
+  const warn = fb.warning
   let sugg = fb.suggestions
   let guesses = parseInt(z.guesses)
 
@@ -58,14 +49,14 @@ export const pwhints = pwd => {
   }
 
   let t = .7/100 * guesses
-  let pwbytes = encode(pwd)
-  let factor = costfactor(pwbytes)
+  const pwbytes = encode(pwd)
+  const factor = costfactor(pwbytes)
   t *= factor
   let out = []
-  let crackTime = `Estimated time to hack: ${display_time(t)}`
+  const crackTime = `Estimated time to hack: ${display_time(t)}`
   let valid = true
 
-  let enclen = pwbytes.length
+  const enclen = pwbytes.length
   if (enclen < 8 || t < 600){
     out.push('Choose a passphrase you don\'t use elsewhere.')
     valid = false
