@@ -12,13 +12,25 @@ export const generate = (n=4, sep="") => {
   }
 }
 
-generate()
-
-const costfactor = pwd => {
+export const costfactor = pwd => {
   return 1 << Math.max(0, 12 - pwd.length)
 }
 
-const pwhints = pwd => {
+
+export const autoComplete = str => {
+  let results = words.filter((word) => word.startsWith(str))
+  if(!str) return "enter a few letters of a word first"
+  if (results.length > 0 && results.length <= 10) {
+    return results;
+  } else if (results.length > 10) {
+    return "too many matches"
+  } else {
+    return "no matches"
+  }
+}
+
+
+export const pwhints = pwd => {
   let maxLen = 20
   let z = zxcvbn(pwd)
   let fb = z.feedback
@@ -31,7 +43,6 @@ const pwhints = pwd => {
     sugg = []
   }
 
-  
   let t = .7/100 * guesses
   let pwbytes = encode(pwd)
   let factor = costfactor(pwbytes)
@@ -56,7 +67,3 @@ const pwhints = pwd => {
 
   return [out, valid]
 }
-
-export { pwhints, costfactor }
-
-
