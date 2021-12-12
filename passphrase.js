@@ -1,6 +1,18 @@
 import zxcvbn from 'zxcvbn'
-import {display_time} from './helpers.js'
+import { display_time } from './helpers.js'
 import { encode } from './util.js'
+import { words } from './wordList.js'
+
+//Generate a password of random words without repeating any word.
+export const generate = (n=4, sep="") => {
+  let wl = words
+  let pw = wl.sort(() => Math.random() - Math.random()).slice(0, n).join(sep)
+  if (4 * zxcvbn(pw).guesses > wl.length ** n) {
+    return pw
+  }
+}
+
+generate()
 
 const costfactor = pwd => {
   return 1 << Math.max(0, 12 - pwd.length)
@@ -19,6 +31,7 @@ const pwhints = pwd => {
     sugg = []
   }
 
+  
   let t = .7/100 * guesses
   let pwbytes = encode(pwd)
   let factor = costfactor(pwbytes)
