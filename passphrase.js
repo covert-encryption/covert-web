@@ -10,8 +10,9 @@ const sodium = _sodium
 // Generate a password of random words without repeating any word.
 export const generatePassphrase = (n=4, sep="") => {
   const wl = words
+  if (!Number.isInteger(n) || n<3) n=4 // default 4 words. extra barrier after ui validation
   const pw = wl.sort(() => sodium.randombytes_random() - sodium.randombytes_random()).slice(0, n).join(sep)
-  if (4 * zxcvbn(pw).guesses > wl.length ** n) {
+  while (4 * zxcvbn(pw).guesses > wl.length ** n) {
     return pw
   }
 }
