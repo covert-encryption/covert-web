@@ -15,7 +15,7 @@ export const generate = (n=4, sep="") => {
     crypto.getRandomValues(r)
     const wl = [...words]
     const pw = Array.from(r).map(v => wl.splice(Math.floor(v * 2**-32 * wl.length), 1)[0]).join(sep)
-    if (4 * zxcvbn(pw).guesses > wl.length**n) return pw
+    if (4 * zxcvbn(pw).guesses > words.length**n) return pw
   }
 }
 
