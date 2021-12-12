@@ -8,21 +8,19 @@ await _sodium.ready
 const sodium = _sodium
 
 // Generate a password of random words without repeating any word.
-export const generatePassphrase = (n=4, sep="") => {
+export const generate = (n=4, sep="") => {
   if (!Number.isInteger(n) || n < 1 || n > words.length) throw RangeError("Invalid n")
   while (true) {
     const r = new Uint32Array(n)
     crypto.getRandomValues(r)
     const wl = [...words]
     const pw = Array.from(r).map(v => wl.splice(Math.floor(v * 2**-32 * wl.length), 1)[0]).join(sep)
-    if (4 * zxcvbn(pw).guesses > wl.length ** n) return pw
+    if (4 * zxcvbn(pw).guesses > wl.length**n) return pw
   }
 }
 
 
-export const costfactor = pwd => {
-  return 1 << Math.max(0, 12 - pwd.length)
-}
+export const costfactor = pwd => (1 << Math.max(0, 12 - pwd.length))
 
 
 export const autoComplete = str => {
