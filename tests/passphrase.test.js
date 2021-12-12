@@ -1,4 +1,16 @@
-import { pwhints, costfactor } from "../passphrase.js";
+import { generate, pwhints, costfactor } from "../passphrase.js";
+
+const test_generate = () => {
+    let pw1 = generate()
+    let pw2 = generate()
+    console.assert(pw1 !== pw2)
+    let pw3 = generate(8, "-")
+    console.assert((pw3.match(/-/g) || []).length === 7)
+    for (let i = 0; i<10; i++) {
+        generate(8, "_")
+    }
+
+}
 
 const test_costfactor = () => {
     console.assert(costfactor("xxxxxxxx") === 16)
@@ -33,5 +45,6 @@ const test_pwhints = () => {
     console.assert(out.includes(`⚠️  Add some more and we can hash it 16 times faster.`))
 }
 
+test_generate()
 test_costfactor()
 test_pwhints()
