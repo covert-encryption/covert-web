@@ -1,6 +1,8 @@
 // String to ArrayBuffer conversion with Unicode normalisation
 export const encode = str => new TextEncoder().encode(str.normalize('NFKC'))
 
+// SHA-512 hash, returns promise - remember to await
+export const sha = data => crypto.subtle.digest("SHA-512", data)
 
 // Generate a secure random number [0, 1)
 export const random = () => {
