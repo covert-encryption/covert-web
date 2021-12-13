@@ -4,18 +4,14 @@ export const encode = str => new TextEncoder().encode(str.normalize('NFKC'))
 // SHA-512 hash, returns promise - remember to await
 export const sha = data => crypto.subtle.digest("SHA-512", data)
 
-// Generate a secure random number [0, 1)
-export const random = () => {
+// Randomize padding value (bytes) using exponential distribution and the given preferred mean size
+const randpad = prefsize => {
   const r = new Uint32Array(2)
   crypto.getRandomValues(r)
-  r[0] &= 0xFFFFF800  // Keep it under 1.0
-  return r[0] * 2**-64 + r[1] * 2**-32
+  // Calculate with 65 bits of precision, providing m between 0 and 45.05...
+  const m = Math.log(2**32) - Math.log(r[1] + r[0] * 2**-32 + 2**-33)
+  return Math.round(m * prefsize)
 }
-
-
-// Randomize padding value (bytes) using exponential distributen and the given preferred mean size
-const randpad = prefsize => Math.round(-prefsize * Math.log(1 - random()))
-
 
 // Calculate random padding size in bytes as (roughly) proportion p of total size.
 export const random_padding = (total, p=0.05) => {
