@@ -1,3 +1,5 @@
+import { pwauthkey } from "./passphrase.js"
+
 import _sodium from "libsodium-wrappers"
 
 await _sodium.ready
@@ -33,4 +35,23 @@ export const find_block0 = (key, ciphertext, block0pos) => {
   throw err || RangeError("No space to search for Block0")
 }
 
+export const find_slots = (authkey, ciphertext) => {
+  // FIXME: implementation for multiple slots too
+  return find_block0(authkey, ciphertext)
+}
+
 export const open_wideopen = ciphertext => find_block0(new Uint8Array(32), ciphertext, 12)
+
+export const open_pwhash = (ciphertext, pwhash) => {
+  const nonce = ciphertext.slice(0, 12)
+  const authkey = pwauthkey(pwhash, nonce)
+  find_block0(authkey, ciphertext, 12) // Try single passphrase in short mode
+  find_slots(authkey, ciphertext)  // Try advanced mode
+}
+
+export const open_key = (ciphertext, recvkey) => {
+  const nonce = ciphertext.slice(0, 12)
+  const ephash = ciphertext.slice(0, 32)
+  const authkey = new Uint8Array(32) // FIXME: derive_symkey(nonce, ephash, recvkey)
+  find_slots(authkey, ciphertext)
+}

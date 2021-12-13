@@ -1,3 +1,4 @@
+import argon2 from 'argon2-browser'
 import _sodium from 'libsodium-wrappers'
 import zxcvbn from 'zxcvbn'
 import { webcrypto } from 'crypto'
@@ -75,3 +76,21 @@ export const pwhints = pwd => {
 
   return [crackTime, out, valid]
 }
+
+
+const hash = async (hashLen, pw, salt, cost) => {
+  if (salt.length !== 16) throw RangeError("Argon2 salt must be 16 bytes (sodium compatibility)")
+  const h = await argon2.hash({
+    pass: pw,
+    salt: salt,
+    time: cost,
+    mem: 262144,
+    hashLen,
+    parallelism: 1,
+    type: argon2.ArgonType.Argon2id,
+  })
+  return h.hash
+}
+
+export const pwhash = async pw => hash(16, pw, encode("covertpassphrase"), 8 * costfactor(pw))
+export const pwauthkey = async (pwhash, nonce) => hash(32, nonce, pwhash, 2)
