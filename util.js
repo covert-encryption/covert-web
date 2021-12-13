@@ -6,7 +6,7 @@ export const encode = str => new TextEncoder().encode(str.normalize('NFKC'))
 export const random = () => {
   const r = new Uint32Array(2)
   crypto.getRandomValues(r)
-  r[0] &= ~1  // Keep it under 1.0
+  r[0] &= 0xFFFFF800  // Keep it under 1.0
   return r[0] * 2**-64 + r[1] * 2**-32
 }
 
