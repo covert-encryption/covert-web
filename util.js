@@ -1,5 +1,6 @@
 // String to ArrayBuffer conversion with Unicode normalisation
 export const encode = str => new TextEncoder().encode(str.normalize('NFKC'))
+export const decode = data => new TextDecoder().decode(data)
 
 // SHA-512 hash, returns promise - remember to await
 export const sha = data => crypto.subtle.digest("SHA-512", data)
