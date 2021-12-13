@@ -24,3 +24,18 @@ export const random_padding = (total, p=0.05) => {
   // Apply pad-to-fixed-size for very short messages plus random padding
   return padfixed + randpad(prefsize)
 }
+
+
+export const armor_decode = text => Uint8Array.from(atob(text), c => c.charCodeAt(0))
+export const armor_encode = data => btoa(String.fromCharCode.apply(null, data))
+
+// Increment nonce which must be Uint8Array(12)
+export const nonce_increment = n => {
+  for (let i = 0; i < 12; ++i) if (++n[i] < 256) break
+}
+
+// XOR buffer a with bytes of b (both of length multiple of four)
+export const xor = (a, b) => {
+  const a32 = new Uint32Array(a), b32 = new Uint32Array(b)
+  for (let i = 0; i < b32.length; ++i) a32[i] ^= b32[i]
+}

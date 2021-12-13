@@ -21,18 +21,3 @@ const pwauthkey = async (pwhash, nonce) => argon2(32, nonce, pwhash, 2)
 
 // String to ArrayBuffer conversion with Unicode normalisation
 const encode = str => new TextEncoder().encode(str.normalize('NFKC'))
-
-// XOR buffer a with bytes of b (both of length multiple of four)
-const xor = (a, b) => {
-  const a32 = new Uint32Array(a), b32 = new Uint32Array(b)
-  for (let i = 0; i < b32.length; ++i) a32[i] ^= b32[i]
-}
-
-
-const armor_decode = text => Uint8Array.from(atob(text), c => c.charCodeAt(0))
-const armor_encode = data => btoa(String.fromCharCode.apply(null, data))
-
-// Increment nonce which must be Uint8Array(12)
-const nonce_increment = n => {
-  for (let i = 0; i < 12; ++i) if (++n[i] < 256) break
-}
