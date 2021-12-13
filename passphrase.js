@@ -1,11 +1,13 @@
 import _sodium from 'libsodium-wrappers'
 import zxcvbn from 'zxcvbn'
+import { webcrypto } from 'crypto'
 import { display_time } from './helpers.js'
 import { encode } from './util.js'
-import { words } from './wordList.js'
+import { words } from './wordlist.js'
 
 await _sodium.ready
 const sodium = _sodium
+const crypto = webcrypto
 
 // Generate a password of random words without repeating any word.
 export const generate = (n=4, sep="") => {

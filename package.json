@@ -12,6 +12,7 @@
     "url": "https://github.com/covert-encryption/covert-web"
   },
   "dependencies": {
+    "crypto": "^1.0.1",
     "libsodium-wrappers": "^0.7.9",
     "zxcvbn": "^4.4.2"
   },
