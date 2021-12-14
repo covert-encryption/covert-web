@@ -29,6 +29,11 @@ libsodium@^0.7.0:
   resolved "https://registry.yarnpkg.com/libsodium/-/libsodium-0.7.9.tgz#4bb7bcbf662ddd920d8795c227ae25bbbfa3821b"
   integrity sha512-gfeADtR4D/CM0oRUviKBViMGXZDgnFdMKMzHsvBdqLBHd9ySi6EtYnmuhHVDDYgYpAO8eU8hEY+F8vIUAPh08A==
 
+monocypher-wasm@^3.1.2-3:
+  version "3.1.2-3"
+  resolved "https://registry.yarnpkg.com/monocypher-wasm/-/monocypher-wasm-3.1.2-3.tgz#35175234f233f60a84f78867c9a487a392ae0a33"
+  integrity sha512-ff8EuymCnjg0hHKkgFF6EsbcXW1iNjTgPMNv2mbT5NX5Wm7/uEDHFD4b7uQqnVlzFAtn/d4zrROPxUbrckizSA==
+
 zxcvbn@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/zxcvbn/-/zxcvbn-4.4.2.tgz#28ec17cf09743edcab056ddd8b1b06262cc73c30"

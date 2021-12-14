@@ -16,6 +16,7 @@
     "argon2-browser": "^1.18.0",
     "crypto": "^1.0.1",
     "libsodium-wrappers": "^0.7.9",
+    "monocypher-wasm": "^3.1.2-3",
     "zxcvbn": "^4.4.2"
   },
   "keywords": [
