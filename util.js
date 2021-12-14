@@ -44,15 +44,17 @@ export const xor = (a, b) => {
 }
 
 // This reads one object, also returning the remaining data as a new view
+// Hacking around a stupid restriction of the msgpack module
+// TODO: Needs a proper solution
 export const msgpack_decode = dataview => {
+  let pos
   try {
-    return {value: msgpack.decode(dataview), pos: data.length}
+    msgpack.decode(dataview)  // Calculate size
+    pos = dataview.byteLength
   } catch (error) {
-    // Hacking around a stupid restriction of the msgpack module
-    // TODO: Needs a proper solution
-    const pos = parseInt(`${error}`.match(/Extra \d+ of \d+ byte\(s\) found at buffer\[(\d+)\]/)[1])
-    const obj = new DataView(dataview.buffer, dataview.byteOffset, pos)
-    const buffer = new DataView(dataview.buffer, dataview.byteOffset + pos, dataview.byteLength - pos)
-    return {value: msgpack.decode(obj), buffer}
+    pos = parseInt(`${error}`.match(/Extra \d+ of \d+ byte\(s\) found at buffer\[(\d+)\]/)[1])
   }
+  const obj = new DataView(dataview.buffer, dataview.byteOffset, pos)
+  dataview = new DataView(dataview.buffer, dataview.byteOffset + pos, dataview.byteLength - pos)
+  return {value: msgpack.decode(obj), dataview}
 }

@@ -16,7 +16,7 @@ const test_decrypt = () => {
   // Archive layer decoding
   const m = msgpack_decode(block0.view)
   console.assert(m.value === 5, "index header", m.value)
-  const message = decode(m.buffer)
+  const message = decode(m.dataview)
   console.assert(message.length === 5, "message text length", message.length)
   console.assert(message === "hello", "message text", message)
 }
