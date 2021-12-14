@@ -1,3 +1,5 @@
+import msgpack from "@msgpack/msgpack"
+
 // String to ArrayBuffer conversion with Unicode normalisation
 export const encode = str => new TextEncoder().encode(str.normalize('NFKC'))
 export const decode = data => new TextDecoder().decode(data)
@@ -39,4 +41,18 @@ export const nonce_increment = n => {
 export const xor = (a, b) => {
   const a32 = new Uint32Array(a), b32 = new Uint32Array(b)
   for (let i = 0; i < b32.length; ++i) a32[i] ^= b32[i]
+}
+
+// This reads one object, also returning the remaining data as a new view
+export const msgpack_decode = dataview => {
+  try {
+    return {value: msgpack.decode(dataview), pos: data.length}
+  } catch (error) {
+    // Hacking around a stupid restriction of the msgpack module
+    // TODO: Needs a proper solution
+    const pos = parseInt(`${error}`.match(/Extra \d+ of \d+ byte\(s\) found at buffer\[(\d+)\]/)[1])
+    const obj = new DataView(dataview.buffer, dataview.byteOffset, pos)
+    const buffer = new DataView(dataview.buffer, dataview.byteOffset + pos, dataview.byteLength - pos)
+    return {value: msgpack.decode(obj), buffer}
+  }
 }

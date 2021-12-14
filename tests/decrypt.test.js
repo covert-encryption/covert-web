@@ -1,4 +1,4 @@
-import { armor_decode, decode } from "../util.js"
+import { armor_decode, decode, msgpack_decode } from "../util.js"
 import { open_wideopen } from "../blockstream.js"
 
 const ciphertext_wideopen = "2qJiI8WsMl+EIj3w6OBStCcnQRckPcE2khVY0jeEjUqDjcDI3w"
@@ -13,6 +13,12 @@ const test_decrypt = () => {
   console.assert(block0.length === 6, "invalid length", block0)
   console.assert(block0.nextlen === 0, "invalid nextlen", block0)
   console.assert(decode(block0.view) === "\x05hello", "invalid content", block0)
+  // Archive layer decoding
+  const m = msgpack_decode(block0.view)
+  console.assert(m.value === 5, "index header", m.value)
+  const message = decode(m.buffer)
+  console.assert(message.length === 5, "message text length", message.length)
+  console.assert(message === "hello", "message text", message)
 }
 
 test_decrypt()

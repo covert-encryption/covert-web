@@ -12,6 +12,7 @@
     "url": "https://github.com/covert-encryption/covert-web"
   },
   "dependencies": {
+    "@msgpack/msgpack": "^2.7.1",
     "argon2-browser": "^1.18.0",
     "crypto": "^1.0.1",
     "libsodium-wrappers": "^0.7.9",
