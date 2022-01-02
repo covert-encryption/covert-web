@@ -1,5 +1,5 @@
 import argon2 from 'argon2-browser'
-import _sodium from 'libsodium-wrappers'
+import _sodium from 'libsodium-wrappers-sumo'
 import zxcvbn from 'zxcvbn'
 import { webcrypto } from 'crypto'
 import { display_time } from './helpers.js'

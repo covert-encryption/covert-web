@@ -3,38 +3,38 @@
 
 
 "@msgpack/msgpack@^2.7.1":
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/@msgpack/msgpack/-/msgpack-2.7.1.tgz#f01954baadc502f3c82e9c3f72c740ce65eae1cc"
-  integrity sha512-ApwiSL2c9ObewdOE/sqt788P1C5lomBOHyO8nUBCr4ofErBCnYQ003NtJ8lS9OQZc11ximkbmgAZJjB8y6cCdA==
+  "integrity" "sha512-ApwiSL2c9ObewdOE/sqt788P1C5lomBOHyO8nUBCr4ofErBCnYQ003NtJ8lS9OQZc11ximkbmgAZJjB8y6cCdA=="
+  "resolved" "https://registry.npmjs.org/@msgpack/msgpack/-/msgpack-2.7.1.tgz"
+  "version" "2.7.1"
 
-argon2-browser@^1.18.0:
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/argon2-browser/-/argon2-browser-1.18.0.tgz#f35820211e0a431aed7f82b9348477234be69bec"
-  integrity sha512-ImVAGIItnFnvET1exhsQB7apRztcoC5TnlSqernMJDUjbc/DLq3UEYeXFrLPrlaIl8cVfwnXb6wX2KpFf2zxHw==
+"argon2-browser@^1.18.0":
+  "integrity" "sha512-ImVAGIItnFnvET1exhsQB7apRztcoC5TnlSqernMJDUjbc/DLq3UEYeXFrLPrlaIl8cVfwnXb6wX2KpFf2zxHw=="
+  "resolved" "https://registry.npmjs.org/argon2-browser/-/argon2-browser-1.18.0.tgz"
+  "version" "1.18.0"
 
-crypto@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/crypto/-/crypto-1.0.1.tgz#2af1b7cad8175d24c8a1b0778255794a21803037"
-  integrity sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==
+"libsodium-sumo@^0.7.0":
+  "integrity" "sha512-DcfJ57zlSlcmQU4s8KOX78pT0zKx5S9RLi0oyDuoIgm4K95+VNSaOidK/y9lUK4lxft14PtTPjoBy8tmLk1TDQ=="
+  "resolved" "https://registry.npmjs.org/libsodium-sumo/-/libsodium-sumo-0.7.9.tgz"
+  "version" "0.7.9"
 
-libsodium-wrappers@^0.7.9:
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/libsodium-wrappers/-/libsodium-wrappers-0.7.9.tgz#4ffc2b69b8f7c7c7c5594a93a4803f80f6d0f346"
-  integrity sha512-9HaAeBGk1nKTRFRHkt7nzxqCvnkWTjn1pdjKgcUnZxj0FyOP4CnhgFhMdrFfgNsukijBGyBLpP2m2uKT1vuWhQ==
+"libsodium-wrappers-sumo@^0.7.9":
+  "integrity" "sha512-XLgLkqY973PngrRElbjOH0y7bJKYEfMWVpWPmW5iuhBjO6zXvHYQWtN52MVEeie/h98ZXN1Aw9BE+GzxQVAfLg=="
+  "resolved" "https://registry.npmjs.org/libsodium-wrappers-sumo/-/libsodium-wrappers-sumo-0.7.9.tgz"
+  "version" "0.7.9"
   dependencies:
-    libsodium "^0.7.0"
+    "libsodium-sumo" "^0.7.0"
 
-libsodium@^0.7.0:
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/libsodium/-/libsodium-0.7.9.tgz#4bb7bcbf662ddd920d8795c227ae25bbbfa3821b"
-  integrity sha512-gfeADtR4D/CM0oRUviKBViMGXZDgnFdMKMzHsvBdqLBHd9ySi6EtYnmuhHVDDYgYpAO8eU8hEY+F8vIUAPh08A==
+"libsodium@^0.7.0":
+  "integrity" "sha512-gfeADtR4D/CM0oRUviKBViMGXZDgnFdMKMzHsvBdqLBHd9ySi6EtYnmuhHVDDYgYpAO8eU8hEY+F8vIUAPh08A=="
+  "resolved" "https://registry.npmjs.org/libsodium/-/libsodium-0.7.9.tgz"
+  "version" "0.7.9"
 
-monocypher-wasm@^3.1.2-3:
-  version "3.1.2-3"
-  resolved "https://registry.yarnpkg.com/monocypher-wasm/-/monocypher-wasm-3.1.2-3.tgz#35175234f233f60a84f78867c9a487a392ae0a33"
-  integrity sha512-ff8EuymCnjg0hHKkgFF6EsbcXW1iNjTgPMNv2mbT5NX5Wm7/uEDHFD4b7uQqnVlzFAtn/d4zrROPxUbrckizSA==
+"monocypher-wasm@^3.1.2-3":
+  "integrity" "sha512-ff8EuymCnjg0hHKkgFF6EsbcXW1iNjTgPMNv2mbT5NX5Wm7/uEDHFD4b7uQqnVlzFAtn/d4zrROPxUbrckizSA=="
+  "resolved" "https://registry.npmjs.org/monocypher-wasm/-/monocypher-wasm-3.1.2-3.tgz"
+  "version" "3.1.2-3"
 
-zxcvbn@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/zxcvbn/-/zxcvbn-4.4.2.tgz#28ec17cf09743edcab056ddd8b1b06262cc73c30"
-  integrity sha1-KOwXzwl0PtyrBW3dixsGJizHPDA=
+"zxcvbn@^4.4.2":
+  "integrity" "sha1-KOwXzwl0PtyrBW3dixsGJizHPDA="
+  "resolved" "https://registry.npmjs.org/zxcvbn/-/zxcvbn-4.4.2.tgz"
+  "version" "4.4.2"

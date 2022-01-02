@@ -1,6 +1,6 @@
 import { pwauthkey } from "./passphrase.js"
 
-import _sodium from "libsodium-wrappers"
+import _sodium from "libsodium-wrappers-sumo"
 
 await _sodium.ready
 const sodium = _sodium
