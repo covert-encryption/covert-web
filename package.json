@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "@msgpack/msgpack": "^2.7.1",
+    "@zxcvbn-ts/core": "^1.2.0",
+    "@zxcvbn-ts/language-common": "^1.0.2",
+    "@zxcvbn-ts/language-en": "^1.2.0",
     "argon2-browser": "^1.18.0",
     "libsodium-wrappers-sumo": "^0.7.9",
-    "monocypher-wasm": "^3.1.2-3",
-    "zxcvbn": "^4.4.2"
+    "monocypher-wasm": "^3.1.2-3"
   },
   "keywords": [
     "security",
