@@ -1,8 +1,7 @@
 import argon2 from 'argon2-browser'
 import _sodium from 'libsodium-wrappers-sumo'
-import zxcvbn from 'zxcvbn'
+import { estimate } from './zxcvbn.js'
 import { webcrypto } from 'crypto'
-import { display_time } from './helpers.js'
 import { encode } from './util.js'
 import { words } from './wordlist.js'
 
@@ -41,7 +40,7 @@ export const autoComplete = str => {
 
 export const pwhints = pwd => {
   const maxLen = 20
-  const z = zxcvbn(pwd)
+  const z = estimate(pwd)
   const fb = z.feedback
   const warn = fb.warning
   let sugg = fb.suggestions
@@ -57,7 +56,7 @@ export const pwhints = pwd => {
   const factor = costfactor(pwbytes)
   t *= factor
   let out = []
-  const crackTime = `Estimated time to hack: ${display_time(t)}`
+  const crackTime = `Estimated time to hack: ${z.crackTimesDisplay.offlineFastHashing1e10PerSecond}`
   let valid = true
 
   const enclen = pwbytes.length
