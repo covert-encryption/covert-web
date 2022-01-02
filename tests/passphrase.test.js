@@ -1,6 +1,6 @@
 import { generate, pwhints, costfactor, autoComplete, pwhash, pwauthkey } from "../passphrase.js"
 import { encode } from "../util.js"
-import _sodium from 'libsodium-wrappers'
+import _sodium from 'libsodium-wrappers-sumo'
 
 await _sodium.ready
 const sodium = _sodium
@@ -43,14 +43,16 @@ const test_pwhints = () => {
 
     setRes("abcabcabcabc")
     console.assert(!valid)
-    console.assert(out.includes(`⚠️  Repeats like "abcabcabc" are only slightly harder to guess than "abc"`))
+    console.assert(out.includes(`⚠️  Repeated character patterns like "abcabcabc" are easy to guess.`))
+
 
     setRes("ridiculouslylongpasswordthatwecannotletzxcvbncheckbecauseitbecomestooslow")
-    //fails in the time estimation ~ weird
+    console.assert(crackTime === 'Estimated time to hack: centuries')
+    console.assert(out.includes(`🔹 Seems long enough, using the fastest hashing!`))
 
     setRes("quitelegitlongpwd")
     console.assert(valid)
-    console.assert(crackTime === 'Estimated time to hack: centuries')
+    console.assert(crackTime === 'Estimated time to hack: 8 minutes')
     console.assert(out.includes(`🔹 Seems long enough, using the fastest hashing!`))
 
     setRes("faketest")
@@ -62,7 +64,7 @@ const test_pwhints = () => {
     //     'Estimated time to hack: less than a second',
     //     [
     //       "Choose a passphrase you don't use elsewhere.",
-    //       '⚠️ Repeats like "abcabcabc" are only slightly harder to guess than "abc"',
+    //       '⚠️ Repeated character patterns like "abcabcabc" are easy to guess.',
     //       '🔹 Add another word or two. Uncommon words are better.',
     //       '🔹 Avoid repeated words and characters'
     //     ],
