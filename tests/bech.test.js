@@ -1,4 +1,5 @@
 import { encode, decode, bech32_decode, encoding } from "../bech.js"
+import assert from 'assert';
 
 const segwit_scriptpubkey = (version, program) => {
   return [version ? version + 0x50 : 0, program.length].concat(program);
@@ -137,25 +138,25 @@ var INVALID_ADDRESS = [
 for (let p = 0; p < VALID_CHECKSUM_BECH32.length; ++p) {
   let test = VALID_CHECKSUM_BECH32[p]
   let ret = bech32_decode(test, encoding.BECH32)
-  console.assert(ret !== null)
+  assert(ret !== null)
 }
 
 for (let p = 0; p < INVALID_CHECKSUM_BECH32.length; ++p) {
   let test = INVALID_CHECKSUM_BECH32[p]
   let ret = bech32_decode(test, encoding.BECH32)
-  console.assert(ret === null)
+  assert(ret === null)
 }
 
 for (let p = 0; p < VALID_CHECKSUM_BECH32M.length; ++p) {
     let test = VALID_CHECKSUM_BECH32M[p]
     let ret = bech32_decode(test, encoding.BECH32M)
-  console.assert(ret !== null)
+  assert(ret !== null)
 }
 
 for (let p = 0; p < INVALID_CHECKSUM_BECH32M.length; ++p) {
     let test = INVALID_CHECKSUM_BECH32M[p]
     let ret = bech32_decode(test, encoding.BECH32M)
-  console.assert(ret === null)
+  assert(ret === null)
 }
 
 for (let p = 0; p < VALID_ADDRESS.length; ++p) {
@@ -178,11 +179,11 @@ for (let p = 0; p < VALID_ADDRESS.length; ++p) {
     let recreate = encode(hrp, ret.version, ret.program)
     ok = recreate === address.toLowerCase()
   }
-  console.assert(ok)
+  assert(ok)
 }
 
 for (let p = 0; p < INVALID_ADDRESS.length; ++p) {
     let test = INVALID_ADDRESS[p]
     let ok = decode("bc", test) === null && decode("tb", test) === null
-  console.assert(ok)
+  assert(ok)
 }
