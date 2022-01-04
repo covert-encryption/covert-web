@@ -1,6 +1,6 @@
 import argon2 from 'argon2-browser'
 import _sodium from 'libsodium-wrappers-sumo'
-import { estimate } from './zxcvbn.js'
+import { estimate, displayCrackTime } from './zxcvbn.js'
 import { webcrypto } from 'crypto'
 import { encode } from './util.js'
 import { words } from './wordlist.js'
@@ -56,7 +56,7 @@ export const pwhints = pwd => {
   const factor = costfactor(pwbytes)
   t *= factor
   let out = []
-  const crackTime = `Estimated time to hack: ${z.crackTimesDisplay.offlineFastHashing1e10PerSecond}`
+  const crackTime = `Estimated time to hack: ${displayCrackTime(t)}`
   let valid = true
 
   const enclen = pwbytes.length
