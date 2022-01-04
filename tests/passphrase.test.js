@@ -1,7 +1,7 @@
 import { generate, pwhints, costfactor, autoComplete, pwhash, pwauthkey } from "../passphrase.js"
 import { encode } from "../util.js"
 import _sodium from 'libsodium-wrappers-sumo'
-import assert from 'assert';
+import assert from 'assert'
 
 await _sodium.ready
 const sodium = _sodium
@@ -48,12 +48,11 @@ const test_pwhints = () => {
 
 
     setRes("ridiculouslylongpasswordthatwecannotletzxcvbncheckbecauseitbecomestooslow")
-    assert(crackTime === 'Estimated time to hack: centuries')
     assert(out.includes(`🔹 Seems long enough, using the fastest hashing!`))
 
     setRes("quitelegitlongpwd")
     assert(valid)
-    assert(crackTime === 'Estimated time to hack: 8 minutes')
+    assert(crackTime === 'Estimated time to hack: centuries')
     assert(out.includes(`🔹 Seems long enough, using the fastest hashing!`))
 
     setRes("faketest")
