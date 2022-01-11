@@ -54,6 +54,11 @@ const test_wg_keys = () => {
   assert(sec.wg_pk === WG_PK)
 
   assert_bytes_equal(sec.pk, pub.pk)
+
+  // Test equality comparison
+  assert(sec.equals(pub))
+  pub.pk[10] = 0
+  assert(!sec.equals(pub))
 }
 
 //test_age_keys()

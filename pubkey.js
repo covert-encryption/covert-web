@@ -14,9 +14,16 @@ export class Key {
     if (sk) {
       // Calculate public key
       pk = sodium.crypto_scalarmult_base(sk)
-      if (this.pk && this.pk !== pk) throw Error("Public and secret key mismatch")
+      // If both sk and pk were given, verify that they match
+      if (this.pk && !this.equals(new Key({pk}))) throw Error("Public and secret key mismatch")
       this.pk = pk
     }
+  }
+
+  equals(other) {
+    let d = 0
+    for (let i = 0; i < 32; ++i) d |= this.pk[i] ^ other.pk[i]
+    return d === 0
   }
 
   // Age keystr conversions
