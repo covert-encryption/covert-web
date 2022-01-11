@@ -182,3 +182,5 @@ export const encode = (hrp, version, databytes) => {
   }
   return ret
 }
+
+export default {encode, decode}
