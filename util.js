@@ -28,9 +28,13 @@ export const random_padding = (total, p=0.05) => {
   return padfixed + randpad(prefsize)
 }
 
+export const b64dec = text => Uint8Array.from(atob(text), c => c.charCodeAt(0))
+export const b64enc = data => btoa(String.fromCharCode.apply(null, data))
 
-export const armor_decode = text => Uint8Array.from(atob(text), c => c.charCodeAt(0))
-export const armor_encode = data => btoa(String.fromCharCode.apply(null, data))
+export const armor_decode = b64dec
+export const armor_encode = b64enc
+
+
 
 // Increment nonce which must be Uint8Array(12)
 export const nonce_increment = n => {

@@ -1,4 +1,5 @@
 import bech from './bech.js'
+import {b64dec, b64enc} from './util.js'
 import _sodium from 'libsodium-wrappers-sumo'
 
 await _sodium.ready
@@ -17,6 +18,7 @@ export class Key {
       this.pk = pk
     }
   }
+
   // Age keystr conversions
   static from_age_pk(keystr) {
     const pk = bech.decode("age", keystr.toLowerCase())
@@ -26,8 +28,23 @@ export class Key {
   static from_age_sk(keystr) {
     const sk = bech.decode("age-secret-key-", keystr.toLowerCase())
     if (!sk) throw Error("Invalid Age secret key")
-    return new Key({keystr, sk: new UInt8Array(sk), comment: "age"})
+    return new Key({keystr, sk: new Uint8Array(sk), comment: "age"})
   }
-  get age_pk() { bech.encode("age", this.pk) }
-  get age_sk() { bech.encode("age-secret-key=", this.sk).toUpperCase() }
+  get age_pk() { return bech.encode("age", this.pk) }
+  get age_sk() { return bech.encode("age-secret-key=", this.sk).toUpperCase() }
+
+  // WireGuard keystr conversions
+  static from_wg_pk(keystr) {
+    const pk = b64dec(keystr)
+    if (pk.length !== 32) throw Error("Invalid WG public key")
+    return new Key({keystr, pk, comment: "wg"})
+  }
+  static from_wg_sk(keystr) {
+    const sk = b64dec(keystr)
+    if (sk.length !== 32) throw Error("Invalid WG secret key")
+    return new Key({keystr, sk, comment: "wg"})
+  }
+  get wg_pk() { return b64enc(this.pk) }
+  get wg_sk() { return b64enc(this.sk) }
+
 }
