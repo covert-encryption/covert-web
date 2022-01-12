@@ -55,3 +55,12 @@ export class Key {
   get wg_sk() { return b64enc(this.sk) }
 
 }
+
+export const ecdh = (local, remote) => sodium.crypto_scalarmult(local.sk, remote.pk)
+
+export const authkey = (nonce, local, remote) => {
+  const h = sodium.crypto_hash_sha512_init()
+  sodium.crypto_hash_sha512_update(h, nonce)
+  sodium.crypto_hash_sha512_update(h, ecdh(local, remote))
+  return sodium.crypto_hash_sha512_final(h)
+}
