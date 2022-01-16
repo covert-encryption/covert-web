@@ -62,5 +62,5 @@ export const authkey = (nonce, local, remote) => {
   const h = sodium.crypto_hash_sha512_init()
   sodium.crypto_hash_sha512_update(h, nonce)
   sodium.crypto_hash_sha512_update(h, ecdh(local, remote))
-  return sodium.crypto_hash_sha512_final(h)
+  return sodium.crypto_hash_sha512_final(h).slice(0, 32)
 }

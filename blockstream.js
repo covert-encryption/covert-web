@@ -1,4 +1,6 @@
 import { pwauthkey } from "./passphrase.js"
+import { authkey } from "./pubkey.js"
+import EphKey from "./ephkey.js"
 
 import _sodium from "libsodium-wrappers-sumo"
 import { xor } from "./util.js"
@@ -64,7 +66,6 @@ export const open_pwhash = async (ciphertext, pwhash) => {
 
 export const open_key = (ciphertext, recvkey) => {
   const nonce = ciphertext.slice(0, 12)
-  const ephash = ciphertext.slice(0, 32)
-  const authkey = new Uint8Array(32) // FIXME: derive_symkey(nonce, ephash, recvkey)
-  return find_slots(authkey, ciphertext)
+  const ephkey = new EphKey(ciphertext.slice(0, 32))
+  return find_slots(authkey(nonce, recvkey, ephkey), ciphertext)
 }

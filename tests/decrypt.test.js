@@ -1,9 +1,11 @@
 import assert from 'assert'
 import { armor_decode, decode, encode, msgpack_decode } from "../util.js"
-import { open_pwhash, open_wideopen } from "../blockstream.js"
+import { open_key, open_pwhash, open_wideopen } from "../blockstream.js"
 import { pwhash } from "../passphrase.js"
+import { Key } from "../pubkey.js"
 
 const ciphertext_wideopen = "2qJiI8WsMl+EIj3w6OBStCcnQRckPcE2khVY0jeEjUqDjcDI3w"
+const ciphertext_pubkey = "q0IIpBFIDCunCryBe3e/UCk+IzbDrFmEDj1OSTHE/jNkKXkZp0UmqHlidjxrbk5vHvpLEDz/I13Q"
 
 // Message from README.md
 const ciphertext_passphrase = "R/i7oqt9QnTnc6Op9gw9wSbYQq1bfYtKAfEOxpiQopc0SsYdLa12AUkg0o5s4KPfU6eZX59c4SXD2F8efFCEUeU"
@@ -27,6 +29,16 @@ const test_decrypt_wideopen = () => {
   assert(message === "hello", `message text ${message}`)
 }
 
+const test_decrypt_pubkey = () => {
+  const WG_SK = "kLkIpWh5MYKwUA7JdQHnmbc6dEiW0py4VRvqmYyPLHc="
+  //const WG_PK = "ElMfFd2qVIROK4mRaXJouYWC2lxxMApMSe9KyAZcEBc="
+  const key = Key.from_wg_sk(WG_SK)
+  const ciphertext = armor_decode(ciphertext_pubkey)
+  const blockstream = open_key(ciphertext, key)
+  const block0 = blockstream.block
+  assert(decode(block0.view) === "\x05hello", "invalid content")
+}
+
 const test_decrypt_passphrase = async () => {
   const ciphertext = armor_decode(ciphertext_passphrase)
   const pwh = await pwhash(encode("oliveanglepeaceethics"))
@@ -45,4 +57,5 @@ const test_decrypt_passphrase = async () => {
 }
 
 test_decrypt_wideopen()
+test_decrypt_pubkey()
 test_decrypt_passphrase()
