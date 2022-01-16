@@ -1,6 +1,7 @@
 import { pwauthkey } from "./passphrase.js"
 
 import _sodium from "libsodium-wrappers-sumo"
+import { xor } from "./util.js"
 
 await _sodium.ready
 const sodium = _sodium
@@ -36,22 +37,34 @@ export const find_block0 = (key, ciphertext, block0pos) => {
 }
 
 export const find_slots = (authkey, ciphertext) => {
-  // FIXME: implementation for multiple slots too
-  return find_block0(authkey, ciphertext)
+  let err
+  const end = Math.min(640, ciphertext.length - 32 - 19)
+  for (let pos = 0; pos < end; pos += 32) {
+    const key = new Uint8Array(authkey)
+    if (pos) xor(key, ciphertext.slice(pos, pos + 32))
+    try {
+      return find_block0(key, ciphertext, pos + 32)
+    } catch (error) {
+      err = error
+    }
+  }
+  throw err || RangeError("File could not be decrypted.")
 }
 
 export const open_wideopen = ciphertext => find_block0(new Uint8Array(32), ciphertext, 12)
 
-export const open_pwhash = (ciphertext, pwhash) => {
+export const open_pwhash = async (ciphertext, pwhash) => {
   const nonce = ciphertext.slice(0, 12)
-  const authkey = pwauthkey(pwhash, nonce)
-  find_block0(authkey, ciphertext, 12) // Try single passphrase in short mode
-  find_slots(authkey, ciphertext)  // Try advanced mode
+  const authkey = await pwauthkey(pwhash, nonce)
+  try {
+    return find_block0(authkey, ciphertext, 12) // Try single passphrase in short mode
+  } catch (error) {}
+  return find_slots(authkey, ciphertext)  // Try advanced mode
 }
 
 export const open_key = (ciphertext, recvkey) => {
   const nonce = ciphertext.slice(0, 12)
   const ephash = ciphertext.slice(0, 32)
   const authkey = new Uint8Array(32) // FIXME: derive_symkey(nonce, ephash, recvkey)
-  find_slots(authkey, ciphertext)
+  return find_slots(authkey, ciphertext)
 }
